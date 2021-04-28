@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "376971755797",
+    "project_id": "bulletin-test-a74a5",
+    "storage_bucket": "bulletin-test-a74a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:376971755797:android:052954101379ab339da91c",
+        "android_client_info": {
+          "package_name": "com.example.bulletin_Test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "376971755797-d44qaq733qbklgp8bi8jrn97jkkrrai9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKDw24zNxsiOXaMYoMlIKAtpfNY0c4zcc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "376971755797-d44qaq733qbklgp8bi8jrn97jkkrrai9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
