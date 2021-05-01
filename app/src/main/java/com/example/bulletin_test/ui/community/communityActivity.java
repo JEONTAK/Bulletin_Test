@@ -8,13 +8,14 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bulletin_test.R;
-import com.example.bulletin_test.ui.adapter.communityAdapter;
+import com.example.bulletin_test.ui.adapter.recipeAdapter;
 
-import com.example.bulletin_test.ui.writingContent.PostInfo;
+import com.example.bulletin_test.ui.writingContent.RecipePostInfo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -33,6 +34,8 @@ public class communityActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private RecyclerView recyclerView1;
     private RecyclerView recyclerView2;
+    final int numberOfColumns = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,34 +45,37 @@ public class communityActivity extends AppCompatActivity {
 
         findViewById(R.id.recipe_Bulletin).setOnClickListener(onClickListener);
         findViewById(R.id.free_Bulletin).setOnClickListener(onClickListener);
+
         recyclerView1 = (RecyclerView)findViewById(R.id.latest_Post);
         recyclerView1.setHasFixedSize(true);
-        recyclerView1.setLayoutManager(new LinearLayoutManager(communityActivity.this));
+        recyclerView1.setLayoutManager(new GridLayoutManager(communityActivity.this,numberOfColumns));
+
+
         recyclerView2 = (RecyclerView)findViewById(R.id.hot_Post);
         recyclerView2.setHasFixedSize(true);
-        recyclerView2.setLayoutManager(new LinearLayoutManager(communityActivity.this));
+        recyclerView2.setLayoutManager(new GridLayoutManager(communityActivity.this,numberOfColumns));
 
-        CollectionReference collectionReference = firebaseFirestore.collection("bulletin");
+        CollectionReference collectionReference = firebaseFirestore.collection("recipePost");
         collectionReference
-                .orderBy("recom", Query.Direction.DESCENDING).limit(5)
+                .orderBy("recom", Query.Direction.DESCENDING).limit(6)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
-                            ArrayList<PostInfo> latest_postList = new ArrayList<>();
+                            ArrayList<RecipePostInfo> latest_postList = new ArrayList<>();
                             for(QueryDocumentSnapshot document : task.getResult()){
                                 Log.d("로그: ", document.getId() + " => " + document.getData());
-                                latest_postList.add(new PostInfo(
+                                latest_postList.add(new RecipePostInfo(
+                                        document.getData().get("titleImage").toString(),
                                         document.getData().get("title").toString(),
-                                        (ArrayList<String>)document.getData().get("content"),
                                         document.getData().get("publisher").toString(),
                                         new Date(document.getDate("createdAt").getTime()),
                                         (Long) document.getData().get("recom")
                                 ));
                             }
 
-                            RecyclerView.Adapter mAdapter1 = new communityAdapter(communityActivity.this, latest_postList);
+                            RecyclerView.Adapter mAdapter1 = new recipeAdapter(communityActivity.this, latest_postList);
                             recyclerView1.setAdapter(mAdapter1);
                         }
                         else{
@@ -81,25 +87,24 @@ public class communityActivity extends AppCompatActivity {
 
 
         collectionReference
-                .orderBy("createdAt", Query.Direction.DESCENDING).limit(5)
+                .orderBy("createdAt", Query.Direction.DESCENDING).limit(6)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
-                            ArrayList<PostInfo> hot_postList = new ArrayList<>();
+                            ArrayList<RecipePostInfo> hot_postList = new ArrayList<>();
                             for(QueryDocumentSnapshot document : task.getResult()){
                                 Log.d("로그: ", document.getId() + " => " + document.getData());
-
-                                hot_postList.add(new PostInfo(
+                                hot_postList.add(new RecipePostInfo(
+                                        document.getData().get("titleImage").toString(),
                                         document.getData().get("title").toString(),
-                                        (ArrayList<String>)document.getData().get("content"),
                                         document.getData().get("publisher").toString(),
                                         new Date(document.getDate("createdAt").getTime()),
                                         (Long) document.getData().get("recom")
                                 ));
                             }
-                            RecyclerView.Adapter mAdapter2 = new communityAdapter(communityActivity.this, hot_postList);
+                            RecyclerView.Adapter mAdapter2 = new recipeAdapter(communityActivity.this, hot_postList);
                             recyclerView2.setAdapter(mAdapter2);
                         }
                         else{

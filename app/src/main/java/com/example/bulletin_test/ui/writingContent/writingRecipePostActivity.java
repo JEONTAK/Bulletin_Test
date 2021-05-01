@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -39,7 +40,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class writingPostActivity extends AppCompatActivity {
+public class writingRecipePostActivity extends AppCompatActivity {
 
     private static final String TAG =" bulletinActivity";
     private FirebaseUser user;
@@ -51,6 +52,9 @@ public class writingPostActivity extends AppCompatActivity {
     private EditText selectedEditText;
 
     private int pathCount , successCount;
+
+    private ImageButton titleImage;
+    private String titleImagePath;
     //dbUploader
 
     @Override
@@ -67,10 +71,12 @@ public class writingPostActivity extends AppCompatActivity {
         findViewById(R.id.confirmBtn).setOnClickListener(onClickListener);
         findViewById(R.id.goBackBtn).setOnClickListener(onClickListener);
         findViewById(R.id.addImageBtn).setOnClickListener(onClickListener);
+        titleImage = findViewById(R.id.addTitleImageBtn);
+        titleImage.setOnClickListener(onClickListener);
         findViewById(R.id.imageModify).setOnClickListener(onClickListener);
         findViewById(R.id.imageDelete).setOnClickListener(onClickListener);
-        findViewById(R.id.editContent).setOnFocusChangeListener(onFocusChangeListener);
-        findViewById(R.id.editTitle).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        findViewById(R.id.editContent_Recipe).setOnFocusChangeListener(onFocusChangeListener);
+        findViewById(R.id.editTitle_Recipe).setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
@@ -91,7 +97,7 @@ public class writingPostActivity extends AppCompatActivity {
 
                     ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-                    LinearLayout linearLayout = new LinearLayout(writingPostActivity.this);
+                    LinearLayout linearLayout = new LinearLayout(writingRecipePostActivity.this);
                     linearLayout.setLayoutParams(layoutParams);
                     linearLayout.setOrientation(LinearLayout.VERTICAL);
                     if(selectedEditText == null){
@@ -104,7 +110,7 @@ public class writingPostActivity extends AppCompatActivity {
                             }
                         }
                     }
-                    ImageView imageView = new ImageView(writingPostActivity.this);
+                    ImageView imageView = new ImageView(writingRecipePostActivity.this);
                     imageView.setLayoutParams(layoutParams);
                     imageView.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -116,7 +122,7 @@ public class writingPostActivity extends AppCompatActivity {
                     Glide.with(this).load(profilePath).override(1000).into(imageView);
                     linearLayout.addView(imageView);
 
-                    EditText editText = new EditText(writingPostActivity.this);
+                    EditText editText = new EditText(writingRecipePostActivity.this);
                     editText.setLayoutParams(layoutParams);
                     editText.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_CLASS_TEXT);
                     editText.setHint("사진에대한 설명을 입력해주세요!!");
@@ -125,6 +131,13 @@ public class writingPostActivity extends AppCompatActivity {
                 }
                 break;
             case 1:
+                if(resultCode == Activity.RESULT_OK){
+                    String profilePath = data.getStringExtra("profilePath");
+                    titleImagePath = profilePath;
+                    Glide.with(this).load(profilePath).override(1000).into(titleImage);
+                }
+                break;
+            case 2:
                 if(resultCode == Activity.RESULT_OK){
                     String profilePath = data.getStringExtra("profilePath");
                     Glide.with(this).load(profilePath).override(1000).into(selectedImageView);
@@ -147,13 +160,16 @@ public class writingPostActivity extends AppCompatActivity {
                 case R.id.addImageBtn:
                     myStartActivity(galleryActivity.class,"image", 0);
                     break;
+                case R.id.addTitleImageBtn:
+                    myStartActivity(galleryActivity.class,"image", 1);
+                    break;
                 case R.id.backBtnLayout:
                     if(backBtnLayout.getVisibility() == View.VISIBLE){
                         backBtnLayout.setVisibility(View.GONE);
                     }
                     break;
                 case R.id.imageModify:
-                    myStartActivity(galleryActivity.class,"image", 1);
+                    myStartActivity(galleryActivity.class,"image", 2);
                     backBtnLayout.setVisibility(View.GONE);
                     break;
                 case R.id.imageDelete:
@@ -177,7 +193,7 @@ public class writingPostActivity extends AppCompatActivity {
 
 
     private void bulletinUpload(){
-        final String title = ((EditText)findViewById(R.id.editTitle)).getText().toString();
+        final String title = ((EditText)findViewById(R.id.editTitle_Recipe)).getText().toString();
 
         if(title.length() > 0 && pathList.size() > 0){
             loaderLayout.setVisibility(View.VISIBLE);
@@ -187,7 +203,33 @@ public class writingPostActivity extends AppCompatActivity {
             FirebaseStorage storage = FirebaseStorage.getInstance();
             StorageReference storageRef = storage.getReference();
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-            final DocumentReference documentReference = firebaseFirestore.collection("bulletin").document();
+            final DocumentReference documentReference = firebaseFirestore.collection("recipePost").document();
+
+            String[] titleArray = titleImagePath.split("\\.");
+            final StorageReference titleImagesRef = storageRef.child("recipePost/" + documentReference.getId() + "/title" +titleArray[titleArray.length - 1]);
+            try{
+                InputStream stream = new FileInputStream(new File(titleImagePath));
+                StorageMetadata metadata = new StorageMetadata.Builder().setCustomMetadata("title", "" + titleImagePath).build();
+                UploadTask uploadTask = titleImagesRef.putStream(stream,metadata);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        titleImagesRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                titleImagePath = uri.toString();
+                            }
+                        });
+                    }
+                });
+            } catch (FileNotFoundException e) {
+                Log.e("로그","에러:" + e.toString());
+            }
 
 
             for(int i = 0 ;  i < parent.getChildCount() ; i++){
@@ -202,7 +244,7 @@ public class writingPostActivity extends AppCompatActivity {
                     }else{
                         contentsList.add(pathList.get(pathCount));
                         String[] pathArray = pathList.get(pathCount).split("\\.");
-                        final StorageReference mountainImagesRef = storageRef.child("bulletin/" + documentReference.getId() + "/" + pathCount + pathArray[pathArray.length - 1]);
+                        final StorageReference mountainImagesRef = storageRef.child("recipePost/" + documentReference.getId() + "/" + pathCount + pathArray[pathArray.length - 1]);
                         try{
                             InputStream stream = new FileInputStream(new File(pathList.get(pathCount)));
                             StorageMetadata metadata = new StorageMetadata.Builder().setCustomMetadata("index", ""+ (contentsList.size() - 1)).build();
@@ -223,8 +265,8 @@ public class writingPostActivity extends AppCompatActivity {
                                             successCount++;
                                             Log.e("로그","" +successCount);
                                             if(pathList.size() == successCount){
-                                                PostInfo postInfo = new PostInfo(title, contentsList, user.getUid(), new Date(), 0);
-                                                dbUploader(documentReference, postInfo);
+                                                RecipePostInfo recipePostInfo = new RecipePostInfo(titleImagePath, title, contentsList, user.getUid(), new Date(), 0);
+                                                dbUploader(documentReference, recipePostInfo);
                                                 for(int a = 0 ; a < contentsList.size(); a++){
                                                     Log.e("로그: ", "콘텐츠: " +contentsList.get(a));
                                                 }
@@ -248,8 +290,8 @@ public class writingPostActivity extends AppCompatActivity {
         }
     }
 
-    private void dbUploader(DocumentReference documentReference , PostInfo postInfo){
-        documentReference.set(postInfo)
+    private void dbUploader(DocumentReference documentReference , RecipePostInfo recipePostInfo){
+        documentReference.set(recipePostInfo)
             .addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {

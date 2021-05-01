@@ -7,16 +7,15 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bulletin_test.R;
-import com.example.bulletin_test.ui.adapter.communityAdapter;
-import com.example.bulletin_test.ui.writingContent.PostInfo;
-import com.example.bulletin_test.ui.writingContent.writingPostActivity;
+import com.example.bulletin_test.ui.adapter.recipeAdapter;
+import com.example.bulletin_test.ui.writingContent.RecipePostInfo;
+import com.example.bulletin_test.ui.writingContent.writingRecipePostActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -29,6 +28,7 @@ import java.util.Date;
 public class recipeCommunityActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private RecyclerView recipeRecyclerView;
+    final int numberOfColumns = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +40,16 @@ public class recipeCommunityActivity extends AppCompatActivity {
 
         recipeRecyclerView = findViewById(R.id.post2);
         recipeRecyclerView.setHasFixedSize(true);
-        recipeRecyclerView.setLayoutManager(new LinearLayoutManager(recipeCommunityActivity.this));
+        recipeRecyclerView.setLayoutManager(new GridLayoutManager(recipeCommunityActivity.this,numberOfColumns));
 
 
     }
 
+    @Override
     protected void onResume(){
         super.onResume();
 
-        CollectionReference collectionReference = firebaseFirestore.collection("bulletin");
+        CollectionReference collectionReference = firebaseFirestore.collection("recipePost");
         collectionReference
                 .orderBy("createdAt", Query.Direction.DESCENDING)
                 .get()
@@ -56,19 +57,19 @@ public class recipeCommunityActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            ArrayList<PostInfo> recipe_postList = new ArrayList<>();
+                            ArrayList<RecipePostInfo> recipe_postList = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("로그: ", document.getId() + " => " + document.getData());
-                                recipe_postList.add(new PostInfo(
+                                recipe_postList.add(new RecipePostInfo(
+                                        document.getData().get("titleImage").toString(),
                                         document.getData().get("title").toString(),
-                                        (ArrayList<String>) document.getData().get("content"),
                                         document.getData().get("publisher").toString(),
                                         new Date(document.getDate("createdAt").getTime()),
                                         (Long) document.getData().get("recom")
                                 ));
                             }
 
-                            RecyclerView.Adapter mAdapter = new communityAdapter(recipeCommunityActivity.this, recipe_postList);
+                            RecyclerView.Adapter mAdapter = new recipeAdapter(recipeCommunityActivity.this, recipe_postList);
                             recipeRecyclerView.setAdapter(mAdapter);
                         } else {
                             Log.d("로그: ", "Error getting documents: ", task.getException());
@@ -83,7 +84,7 @@ public class recipeCommunityActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.recipePostBtn:
-                    myStartActivity(writingPostActivity.class);
+                    myStartActivity(writingRecipePostActivity.class);
                     break;
             }
         }

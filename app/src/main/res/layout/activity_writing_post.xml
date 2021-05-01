@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginRight="3dp">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,8 +17,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <ImageButton
+                android:id="@+id/addTitleImageBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:srcCompat="@tools:sample/avatars" />
+
             <EditText
-                android:id="@+id/editTitle"
+                android:id="@+id/editTitle_Recipe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -36,7 +43,7 @@
                     android:orientation="vertical">
 
                     <EditText
-                        android:id="@+id/editContent"
+                        android:id="@+id/editContent_Recipe"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:ems="10"
@@ -48,180 +55,181 @@
 
             </LinearLayout>
 
-        </LinearLayout>
-    </ScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="25dp"
-        android:gravity="bottom"
-        android:orientation="vertical"
-        android:padding="5dp">
-
-        <TextView
-            android:id="@+id/recipePrice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="가격을 입력해주세요!"
-            android:textSize="18sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TableLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:stretchColumns="*">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:orientation="vertical"
+                android:padding="5dp">
 
-                <TableRow
+                <TextView
+                    android:id="@+id/recipePrice"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="가격을 입력해주세요!"
+                    android:textSize="18sp" />
 
-                    <Spinner
-                        android:id="@+id/foodCategorySpinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <Spinner
-                        android:id="@+id/priceCategorySpinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <Spinner
-                        android:id="@+id/tagCategorySpinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </TableRow>
-            </TableLayout>
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:stretchColumns="*">
-
-                <TableRow
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    <CheckBox
-                        android:id="@+id/wholeConv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="전체" />
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:stretchColumns="*">
 
-                    <CheckBox
-                        android:id="@+id/gs25Check"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="GS25" />
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-                    <CheckBox
-                        android:id="@+id/sevenElevenCheck"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="세븐일레븐" />
+                            <Spinner
+                                android:id="@+id/foodCategorySpinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
 
-                    <CheckBox
-                        android:id="@+id/cuCheck"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="CU" />
+                            <Spinner
+                                android:id="@+id/priceCategorySpinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
 
-                    <CheckBox
-                        android:id="@+id/emart24Check"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Emart24" />
-                </TableRow>
-            </TableLayout>
+                            <Spinner
+                                android:id="@+id/tagCategorySpinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </TableRow>
+                    </TableLayout>
 
-            <Button
-                android:id="@+id/addImageBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#000000"
-                android:text="이미지첨부"
-                android:textSize="18sp" />
-        </LinearLayout>
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:stretchColumns="*">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="bottom"
-            android:orientation="horizontal">
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/confirmBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="3dp"
-                android:layout_weight="1"
-                android:text="레시피 작성"
-                android:textSize="18sp"
-                app:backgroundTint="#000000" />
+                            <CheckBox
+                                android:id="@+id/wholeConv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="전체" />
 
-            <Button
-                android:id="@+id/goBackBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_weight="1"
-                android:text="뒤로가기"
-                android:textSize="18sp"
-                app:backgroundTint="#000000" />
+                            <CheckBox
+                                android:id="@+id/gs25Check"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="GS25" />
 
-        </LinearLayout>
+                            <CheckBox
+                                android:id="@+id/sevenElevenCheck"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="세븐일레븐" />
 
-    </LinearLayout>
+                            <CheckBox
+                                android:id="@+id/cuCheck"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="CU" />
 
-    <RelativeLayout
-            android:id="@+id/backBtnLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/gray">
+                            <CheckBox
+                                android:id="@+id/emart24Check"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Emart24" />
+                        </TableRow>
+                    </TableLayout>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:elevation="10dp"
-                android:visibility="gone"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="15dp">
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="5dp">
+                    android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/imageModify"
-                        android:layout_width="match_parent"
+                        android:id="@+id/addImageBtn"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="@color/black"
-                        android:text="이미지 수정"
+                        android:layout_weight="1"
+                        android:backgroundTint="#000000"
+                        android:text="이미지첨부"
                         android:textSize="18sp" />
 
                     <Button
-                        android:id="@+id/imageDelete"
-                        android:layout_width="match_parent"
+                        android:id="@+id/confirmBtn"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="@color/black"
-                        android:text="이미지 삭제"
-                        android:textSize="18sp" />
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:layout_weight="1"
+                        android:text="레시피 작성"
+                        android:textSize="18sp"
+                        app:backgroundTint="#000000" />
 
+                    <Button
+                        android:id="@+id/goBackBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:layout_weight="1"
+                        android:text="뒤로가기"
+                        android:textSize="18sp"
+                        app:backgroundTint="#000000" />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
-        </RelativeLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/backBtnLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:elevation="10dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <Button
+                    android:id="@+id/imageModify"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/black"
+                    android:text="이미지 수정"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/imageDelete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/black"
+                    android:text="이미지 삭제"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
     <include
         layout="@layout/view_loader"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 </RelativeLayout>
