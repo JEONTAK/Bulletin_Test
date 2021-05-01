@@ -63,6 +63,7 @@ public class recipeCommunityActivity extends AppCompatActivity {
                                 recipe_postList.add(new RecipePostInfo(
                                         document.getData().get("titleImage").toString(),
                                         document.getData().get("title").toString(),
+                                        (ArrayList<String>) document.getData().get("content"),
                                         document.getData().get("publisher").toString(),
                                         new Date(document.getDate("createdAt").getTime()),
                                         (Long) document.getData().get("recom")

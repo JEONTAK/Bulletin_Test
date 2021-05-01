@@ -1,9 +1,10 @@
 package com.example.bulletin_test.ui.writingContent;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class RecipePostInfo{
+public class RecipePostInfo implements Serializable {
     private String titleImage;
     private String title;
     private ArrayList<String> content;
@@ -19,14 +20,6 @@ public class RecipePostInfo{
         this.createdAt = createdAt;
         this.recom = recom;
     }
-    public RecipePostInfo(String titleImage, String title, String publisher, Date createdAt, long recom){
-        this.titleImage = titleImage;
-        this.title = title;
-        this.publisher = publisher;
-        this.createdAt = createdAt;
-        this.recom = recom;
-    }
-
 
 
     public String getTitleImage(){ return this.titleImage;}

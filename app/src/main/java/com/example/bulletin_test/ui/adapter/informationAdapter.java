@@ -13,29 +13,24 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.bulletin_test.R;
 import com.example.bulletin_test.ui.writingContent.RecipePostInfo;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
-public class testAdapter extends RecyclerView.Adapter<testAdapter.communityViewHolder> {
+public class informationAdapter extends RecyclerView.Adapter<informationAdapter.communityViewHolder> {
     private ArrayList<RecipePostInfo> mDataset;
     private Activity activity;
 
 
-    static class communityViewHolder extends RecyclerView.ViewHolder {
+    static class communityViewHolder extends RecyclerView.ViewHolder{
         public CardView cardView;
-
-        communityViewHolder(Activity activity, CardView v, RecipePostInfo recipePostInfo) {
+        communityViewHolder(Activity activity,CardView v, RecipePostInfo recipePostInfo){
             super(v);
             cardView = v;
-*/
-/*
+
             LinearLayout recipeContentLayout = cardView.findViewById(R.id.recipeContentLayout);
             ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             ArrayList<String> recipeContentList = recipePostInfo.getContent();
@@ -57,25 +52,24 @@ public class testAdapter extends RecyclerView.Adapter<testAdapter.communityViewH
                         recipeContentLayout.addView(textView);
                     }
                 }
-            }*//*
-
+            }
         }
     }
 
-    public testAdapter(Activity activity, ArrayList<RecipePostInfo> communityDataset) {
+    public informationAdapter(Activity activity, ArrayList<RecipePostInfo> communityDataset){
         mDataset = communityDataset;
         this.activity = activity;
     }
 
     @Override
-    public int getItemViewType(int position) {
+    public int getItemViewType(int position){
         return position;
     }
 
     @NotNull
     @Override
-    public testAdapter.communityViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
-        CardView cardView = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipe_post, parent, false);
+    public informationAdapter.communityViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType){
+        CardView cardView =(CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipe_post, parent,false);
         final communityViewHolder communityViewHolder = new communityViewHolder(activity, cardView, mDataset.get(viewType));
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,9 +80,8 @@ public class testAdapter extends RecyclerView.Adapter<testAdapter.communityViewH
     }
 
     @Override
-    public void onBindViewHolder(@NotNull final communityViewHolder holder, int position) {
-        */
-/*CardView cardView = holder.cardView;
+    public void onBindViewHolder(@NotNull final communityViewHolder holder, int position){
+        CardView cardView = holder.cardView;
         TextView title = cardView.findViewById(R.id.recipeTitle);
         title.setText(mDataset.get(position).getTitle());
 
@@ -107,16 +100,12 @@ public class testAdapter extends RecyclerView.Adapter<testAdapter.communityViewH
             }
         }
 
-    }*//*
-
-
-   */
-/* @Override
-    public int getItemCount(){
-        return mDataset.size();
-    }*//*
-
-
     }
 
-}*/
+    @Override
+    public int getItemCount(){
+        return mDataset.size();
+    }
+
+}
+*/

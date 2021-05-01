@@ -13,7 +13,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +38,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
+
+import static com.example.bulletin_test.Util.showToast;
 
 public class writingRecipePostActivity extends AppCompatActivity {
 
@@ -77,6 +78,7 @@ public class writingRecipePostActivity extends AppCompatActivity {
         findViewById(R.id.imageDelete).setOnClickListener(onClickListener);
         findViewById(R.id.editContent_Recipe).setOnFocusChangeListener(onFocusChangeListener);
         findViewById(R.id.editTitle_Recipe).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
@@ -285,8 +287,8 @@ public class writingRecipePostActivity extends AppCompatActivity {
             }
         }
         else{
-            startToast("레시피를 정확히 입력해주세요!");
-            startToast("레시피에는 최소 한개 이상의 이미지가 들어가야 해요!");
+            showToast(writingRecipePostActivity.this , "레시피를 정확히 입력해주세요!");
+            showToast(writingRecipePostActivity.this ,"레시피에는 최소 한개 이상의 이미지가 들어가야 해요!");
         }
     }
 
@@ -296,7 +298,7 @@ public class writingRecipePostActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Void aVoid) {
                     loaderLayout.setVisibility(View.GONE);
-                    startToast("게시글 등록 성공!");
+                    showToast(writingRecipePostActivity.this ,"게시글 등록 성공!");
                     Log.w(TAG,"Success writing document" + documentReference.getId());
                     finish();
                 }
@@ -304,15 +306,11 @@ public class writingRecipePostActivity extends AppCompatActivity {
         @Override
         public void onFailure(@NonNull Exception e) {
             loaderLayout.setVisibility(View.GONE);
-            startToast("게시글 등록 실패.");
+            showToast(writingRecipePostActivity.this ,"게시글 등록 실패.");
             Log.w(TAG,"Error writing document", e);
         }
         });
     }
-
-    private void startToast(String msg){
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();}
-
 
     private void myStartActivity(Class c){
         Intent intent=new Intent( this, c);
@@ -326,5 +324,6 @@ public class writingRecipePostActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivityForResult(intent, requestCode);
     }
+
 }
 

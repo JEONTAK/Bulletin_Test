@@ -18,10 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bulletin_test.R;
 import com.example.bulletin_test.ui.adapter.galleryAdapter;
+import com.example.bulletin_test.ui.writingContent.writingRecipePostActivity;
 
 import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
+
+import static com.example.bulletin_test.Util.showToast;
 
 public class galleryActivity extends AppCompatActivity {
 
@@ -38,7 +41,7 @@ public class galleryActivity extends AppCompatActivity {
             if(ActivityCompat.shouldShowRequestPermissionRationale(galleryActivity.this,
                     Manifest.permission.READ_EXTERNAL_STORAGE)){
             }else{
-                startToast("권한을 혀용해 주세요");
+                showToast(galleryActivity.this ,"권한을 혀용해 주세요");
             }
         }else{
             recyclerInit();
@@ -64,7 +67,7 @@ public class galleryActivity extends AppCompatActivity {
                    recyclerInit();
                 }else{
                     finish();
-                    startToast("권한을 허용해주세요");
+                    showToast(galleryActivity.this ,"권한을 허용해주세요");
                 }
             }
         }
@@ -98,6 +101,4 @@ public class galleryActivity extends AppCompatActivity {
         return listOfAllImages;
     }
 
-    private void startToast(String msg){
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();}
 }

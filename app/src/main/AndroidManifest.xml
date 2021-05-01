@@ -36,7 +36,7 @@
         <activity android:name=".ui.community.recipeCommunityActivity"></activity>
         <activity android:name=".ui.writingContent.writingRecipePostActivity"></activity>
         <activity android:name=".ui.writingContent.writingFreePostActivity"></activity>
-
+        <activity android:name=".ui.community.recipeInformationActivity"></activity>
     </application>
 
 </manifest>

@@ -63,7 +63,7 @@ public class freeAdapter extends RecyclerView.Adapter<freeAdapter.communityViewH
         title.setText(mDataset.get(position).getTitle());
 
         TextView createdAt = cardView.findViewById(R.id.freeCreatedAt);
-        createdAt.setText(new SimpleDateFormat("MM-dd-hh:mm", Locale.getDefault()).format(mDataset.get(position).getCreatedAt()));
+        createdAt.setText(new SimpleDateFormat("MM-dd hh:mm", Locale.KOREA).format(mDataset.get(position).getCreatedAt()));
 
         TextView freeContent = cardView.findViewById(R.id.freeContent);
         freeContent.setText(mDataset.get(position).getContent());

@@ -69,6 +69,7 @@ public class communityActivity extends AppCompatActivity {
                                 latest_postList.add(new RecipePostInfo(
                                         document.getData().get("titleImage").toString(),
                                         document.getData().get("title").toString(),
+                                        (ArrayList<String>) document.getData().get("content"),
                                         document.getData().get("publisher").toString(),
                                         new Date(document.getDate("createdAt").getTime()),
                                         (Long) document.getData().get("recom")
@@ -99,6 +100,7 @@ public class communityActivity extends AppCompatActivity {
                                 hot_postList.add(new RecipePostInfo(
                                         document.getData().get("titleImage").toString(),
                                         document.getData().get("title").toString(),
+                                        (ArrayList<String>) document.getData().get("content"),
                                         document.getData().get("publisher").toString(),
                                         new Date(document.getDate("createdAt").getTime()),
                                         (Long) document.getData().get("recom")

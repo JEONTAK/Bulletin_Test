@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bulletin_test.R;
 import com.example.bulletin_test.ui.community.communityActivity;
+import com.example.bulletin_test.ui.gallery.galleryActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,6 +25,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.Date;
+
+import static com.example.bulletin_test.Util.showToast;
 
 public class writingFreePostActivity extends AppCompatActivity {
 
@@ -96,7 +99,7 @@ public class writingFreePostActivity extends AppCompatActivity {
             dbUploader(documentReference, freePostInfo);
         }
         else{
-            startToast("내용을 정확히 입력해주세요!");
+            showToast(writingFreePostActivity.this ,"내용을 정확히 입력해주세요!");
         }
     }
 
@@ -106,7 +109,7 @@ public class writingFreePostActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Void aVoid) {
                     loaderLayout.setVisibility(View.GONE);
-                    startToast("게시글 등록 성공!");
+                    showToast(writingFreePostActivity.this ,"게시글 등록 성공!");
                     Log.w(TAG,"Success writing document" + documentReference.getId());
                     finish();
                 }
@@ -114,14 +117,11 @@ public class writingFreePostActivity extends AppCompatActivity {
         @Override
         public void onFailure(@NonNull Exception e) {
             loaderLayout.setVisibility(View.GONE);
-            startToast("게시글 등록 실패.");
+            showToast(writingFreePostActivity.this ,"게시글 등록 실패.");
             Log.w(TAG,"Error writing document", e);
         }
         });
     }
-
-    private void startToast(String msg){
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();}
 
 
     private void myStartActivity(Class c){

@@ -55,7 +55,10 @@
                 android:id="@+id/recomNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -84,44 +87,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipeInfoTitle" />
 
+        <TextView
+            android:id="@+id/recipeInfoCreatedAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="작성일"
+            android:textColor="#070707"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recipeInfoTitle" />
+
         <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/recipeInfoContent1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="28dp"
-                    android:text="1. cu에 파는 자이언트 떡볶이와 스파게티 컵라면을 조리방법대로 동시에 조리 해 줍니다."
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/recipeInfoCost" />
-
-                <TextView
-                    android:id="@+id/recipeInfoContent2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="2. 조리 후 떡볶이 그릇에 컵라면을 부어 함께 섞어 줍니다." />
-
-                <TextView
-                    android:id="@+id/recipeInfoContent3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="3. 섞인 떡볶이와 스파게티위에 소세지를 잘라 넣고 위에 치즈를 뿌려줍니다." />
-
-                <TextView
-                    android:id="@+id/recipeInfoContent4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="4. 전자레인지에 치즈가 녹을만큼 적당히 돌려주시면 됩니다." />
-
-            </LinearLayout>
+                android:id="@+id/recipeContentLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" />
         </HorizontalScrollView>
 
         <TextView
@@ -135,20 +121,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipeInfoContent" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <HorizontalScrollView
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent" >
+            </androidx.recyclerview.widget.RecyclerView>
+        </HorizontalScrollView>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical" />
-            </HorizontalScrollView>
-        </androidx.recyclerview.widget.RecyclerView>
 
 
     </LinearLayout>
