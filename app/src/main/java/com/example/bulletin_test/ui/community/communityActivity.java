@@ -57,7 +57,7 @@ public class communityActivity extends AppCompatActivity {
 
         CollectionReference collectionReference = firebaseFirestore.collection("recipePost");
         collectionReference
-                .orderBy("createdAt", Query.Direction.DESCENDING).limit(6)
+                .orderBy("recom", Query.Direction.DESCENDING).limit(6)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -69,16 +69,10 @@ public class communityActivity extends AppCompatActivity {
                                 latest_postList.add(new RecipePostInfo(
                                         document.getData().get("titleImage").toString(),
                                         document.getData().get("title").toString(),
-                                        document.getData().get("ingredient").toString(),
                                         (ArrayList<String>) document.getData().get("content"),
                                         document.getData().get("publisher").toString(),
                                         new Date(document.getDate("createdAt").getTime()),
-                                        (Long) document.getData().get("recom"),
-                                        document.getData().get("recipeId").toString(),
-                                        (ArrayList<String>) document.getData().get("recomUserId"),
-                                        (Long) document.getData().get("price"),
-                                        document.getData().get("foodCategory").toString(),
-                                        document.getData().get("tagCategory").toString()
+                                        (Long) document.getData().get("recom")
                                 ));
                             }
 
@@ -94,7 +88,7 @@ public class communityActivity extends AppCompatActivity {
 
 
         collectionReference
-                .orderBy("recom", Query.Direction.DESCENDING).limit(6)
+                .orderBy("createdAt", Query.Direction.DESCENDING).limit(6)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -106,16 +100,10 @@ public class communityActivity extends AppCompatActivity {
                                 hot_postList.add(new RecipePostInfo(
                                         document.getData().get("titleImage").toString(),
                                         document.getData().get("title").toString(),
-                                        document.getData().get("ingredient").toString(),
                                         (ArrayList<String>) document.getData().get("content"),
                                         document.getData().get("publisher").toString(),
                                         new Date(document.getDate("createdAt").getTime()),
-                                        (Long) document.getData().get("recom"),
-                                        document.getData().get("recipeId").toString(),
-                                        (ArrayList<String>) document.getData().get("recomUserId"),
-                                        (Long) document.getData().get("price"),
-                                        document.getData().get("foodCategory").toString(),
-                                        document.getData().get("tagCategory").toString()
+                                        (Long) document.getData().get("recom")
                                 ));
                             }
                             RecyclerView.Adapter mAdapter2 = new recipeAdapter(communityActivity.this, hot_postList);

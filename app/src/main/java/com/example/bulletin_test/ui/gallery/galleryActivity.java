@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,14 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bulletin_test.R;
 import com.example.bulletin_test.ui.adapter.galleryAdapter;
-import com.example.bulletin_test.ui.login.MemberInfo;
 import com.example.bulletin_test.ui.writingContent.writingRecipePostActivity;
 
 import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
 
-import static android.provider.MediaStore.MediaColumns.DATE_TAKEN;
 import static com.example.bulletin_test.Util.showToast;
 
 public class galleryActivity extends AppCompatActivity {
@@ -84,12 +81,16 @@ public class galleryActivity extends AppCompatActivity {
         String PathOfImage = null;
         String[] projection;
         Intent intent = getIntent();
+        if(intent.getStringExtra("media").equals("video")){
+            uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+            projection = new String[] {MediaStore.MediaColumns.DATA,MediaStore.Video.Media.BUCKET_DISPLAY_NAME};
+        }
+        else{
+            uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+            projection = new String[] {MediaStore.MediaColumns.DATA,MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
+        }
 
-        uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-
-        projection = new String[] {MediaStore.MediaColumns.DATA,MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
-
-        cursor = activity.getContentResolver().query(uri,projection,null,null, "\'" + MediaStore.Images.ImageColumns.DATE_TAKEN + "\' ASC");
+        cursor = activity.getContentResolver().query(uri,projection,null,null,null);
 
         column_index_data = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
 
