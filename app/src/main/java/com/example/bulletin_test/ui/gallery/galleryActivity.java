@@ -86,11 +86,11 @@ public class galleryActivity extends AppCompatActivity {
 
         uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 
-        projection = new String[] {MediaStore.MediaColumns.DATA,MediaStore.Images.Media.BUCKET_DISPLAY_NAME, MediaStore.Images.Media.DATE_ADDED};
+        projection = new String[] {MediaStore.MediaColumns.DATA,MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
         for(int i = 0 ; i < projection.length ; i++){
             Log.d("로그: ", "a : " + projection[i]);
         }
-        cursor = activity.getContentResolver().query(uri,projection,null,null, DATE_TAKEN + "DESC");
+        cursor = activity.getContentResolver().query(uri,projection,null,null, "\'" + DATE_TAKEN + "\'DESC");
 
         column_index_data = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
 
