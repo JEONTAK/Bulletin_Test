@@ -25,21 +25,21 @@ import java.util.Locale;
 
 import static com.example.bulletin_test.Util.isStorageUrl;
 
-public class recipeAdapter extends RecyclerView.Adapter<recipeAdapter.communityViewHolder> {
+public class recipeAdapter extends RecyclerView.Adapter<recipeAdapter.recipeViewHolder> {
     private ArrayList<RecipePostInfo> mDataset;
     private Activity activity;
 
 
-    static class communityViewHolder extends RecyclerView.ViewHolder{
+    static class recipeViewHolder extends RecyclerView.ViewHolder{
         public CardView cardView;
-        communityViewHolder(Activity activity,CardView v, RecipePostInfo recipePostInfo){
+        recipeViewHolder(Activity activity,CardView v, RecipePostInfo recipePostInfo){
             super(v);
             cardView = v;
         }
     }
 
-    public recipeAdapter(Activity activity, ArrayList<RecipePostInfo> communityDataset){
-        mDataset = communityDataset;
+    public recipeAdapter(Activity activity, ArrayList<RecipePostInfo> recipeDataset){
+        mDataset = recipeDataset;
         this.activity = activity;
     }
 
@@ -50,24 +50,27 @@ public class recipeAdapter extends RecyclerView.Adapter<recipeAdapter.communityV
 
     @NotNull
     @Override
-    public recipeAdapter.communityViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType){
+    public recipeAdapter.recipeViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType){
         CardView cardView =(CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipe_post, parent,false);
-        final communityViewHolder communityViewHolder = new communityViewHolder(activity, cardView, mDataset.get(viewType));
+        final recipeViewHolder recipeViewHolder = new recipeViewHolder(activity, cardView, mDataset.get(viewType));
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent= new Intent(activity, recipeInformationActivity.class);
-                intent.putExtra("recipePostInfo", mDataset.get(communityViewHolder.getAdapterPosition()));
+                intent.putExtra("recipePostInfo", mDataset.get(recipeViewHolder.getAdapterPosition()));
                 activity.startActivity(intent);
 
             }
         });
-        return communityViewHolder;
+        return recipeViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NotNull final communityViewHolder holder, int position){
+    public void onBindViewHolder(@NotNull final recipeViewHolder holder, int position){
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
         CardView cardView = holder.cardView;
+        cardView.setLayoutParams(layoutParams);
         ImageView titleImage = cardView.findViewById(R.id.recipeTitleImage);
         String titleImagePath = mDataset.get(position).getTitleImage();
         if(isStorageUrl(titleImagePath)){

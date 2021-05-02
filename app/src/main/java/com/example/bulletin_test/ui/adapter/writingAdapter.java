@@ -15,19 +15,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bulletin_test.R;
 import com.example.bulletin_test.ui.writingContent.RecipePostInfo;
+import com.example.bulletin_test.ui.writingContent.writingRecipePostActivity;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class informationAdapter extends RecyclerView.Adapter<informationAdapter.communityViewHolder> {
+public class writingAdapter extends RecyclerView.Adapter<writingAdapter.writingViewHolder> {
     private ArrayList<RecipePostInfo> mDataset;
     private Activity activity;
 
+    public writingAdapter(writingRecipePostActivity activity, LinearLayout linearLayout) {
+    }
 
-    static class communityViewHolder extends RecyclerView.ViewHolder{
+
+    static class writingViewHolder extends RecyclerView.ViewHolder{
         public CardView cardView;
-        communityViewHolder(Activity activity,CardView v, RecipePostInfo recipePostInfo){
+        writingViewHolder(Activity activity,CardView v, RecipePostInfo recipePostInfo){
             super(v);
             cardView = v;
 
@@ -56,8 +60,8 @@ public class informationAdapter extends RecyclerView.Adapter<informationAdapter.
         }
     }
 
-    public informationAdapter(Activity activity, ArrayList<RecipePostInfo> communityDataset){
-        mDataset = communityDataset;
+    public writingAdapter(Activity activity, ArrayList<RecipePostInfo> writingDataset){
+        mDataset = writingDataset;
         this.activity = activity;
     }
 
@@ -68,19 +72,19 @@ public class informationAdapter extends RecyclerView.Adapter<informationAdapter.
 
     @NotNull
     @Override
-    public informationAdapter.communityViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType){
+    public writingAdapter.writingViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType){
         CardView cardView =(CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipe_post, parent,false);
-        final communityViewHolder communityViewHolder = new communityViewHolder(activity, cardView, mDataset.get(viewType));
+        final writingViewHolder writingViewHolder = new writingViewHolder(activity, cardView, mDataset.get(viewType));
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             }
         });
-        return communityViewHolder;
+        return writingViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NotNull final communityViewHolder holder, int position){
+    public void onBindViewHolder(@NotNull final writingViewHolder holder, int position){
         CardView cardView = holder.cardView;
         TextView title = cardView.findViewById(R.id.recipeTitle);
         title.setText(mDataset.get(position).getTitle());

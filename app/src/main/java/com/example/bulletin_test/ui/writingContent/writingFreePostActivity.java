@@ -7,14 +7,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bulletin_test.R;
 import com.example.bulletin_test.ui.community.communityActivity;
-import com.example.bulletin_test.ui.gallery.galleryActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,7 +46,7 @@ public class writingFreePostActivity extends AppCompatActivity {
         
         findViewById(R.id.confirmBtn).setOnClickListener(onClickListener);
         findViewById(R.id.goBackBtn).setOnClickListener(onClickListener);
-        findViewById(R.id.editContent_Recipe).setOnFocusChangeListener(onFocusChangeListener);
+        findViewById(R.id.editIngredient_Recipe).setOnFocusChangeListener(onFocusChangeListener);
         findViewById(R.id.editTitle_Recipe).setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -86,7 +84,7 @@ public class writingFreePostActivity extends AppCompatActivity {
 
     private void bulletinUpload(){
         final String title = ((EditText)findViewById(R.id.editTitle_Recipe)).getText().toString();
-        final String contentsList = ((EditText)findViewById(R.id.editContent_Recipe)).getText().toString();
+        final String contentsList = ((EditText)findViewById(R.id.editIngredient_Recipe)).getText().toString();
 
         if(title.length() > 0 && contentsList.length()> 0){
             loaderLayout.setVisibility(View.VISIBLE);

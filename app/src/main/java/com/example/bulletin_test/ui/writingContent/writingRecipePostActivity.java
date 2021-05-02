@@ -8,11 +8,14 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,37 +55,71 @@ public class writingRecipePostActivity extends AppCompatActivity {
     private ImageView selectedImageView;
     private EditText selectedEditText;
 
+
+
     private int pathCount , successCount;
 
     private ImageButton titleImage;
     private String titleImagePath;
-    //dbUploader
+    private Spinner foodSpinner;
+    private Spinner tagSpinner;
+    private String foodCategory;
+    private String tagCategory;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_writing_post);
+        setContentView(R.layout.activity_recipe_post);
 
         backBtnLayout = findViewById(R.id.backBtnLayout);
         parent = findViewById(R.id.contentsLayout);
         backBtnLayout.setVisibility(View.GONE);
         loaderLayout = findViewById(R.id.loaderLayout);
-
         backBtnLayout.setOnClickListener(onClickListener);
         findViewById(R.id.confirmBtn).setOnClickListener(onClickListener);
         findViewById(R.id.goBackBtn).setOnClickListener(onClickListener);
         findViewById(R.id.addImageBtn).setOnClickListener(onClickListener);
         titleImage = findViewById(R.id.addTitleImageBtn);
         titleImage.setOnClickListener(onClickListener);
+
+        foodSpinner = (Spinner) findViewById(R.id.foodCategorySpinner);
+        tagSpinner = (Spinner) findViewById(R.id.tagCategorySpinner);
+
+        foodSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                foodCategory = (String) parent.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        tagSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                tagCategory = (String) parent.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
         findViewById(R.id.imageModify).setOnClickListener(onClickListener);
         findViewById(R.id.imageDelete).setOnClickListener(onClickListener);
-        findViewById(R.id.editContent_Recipe).setOnFocusChangeListener(onFocusChangeListener);
+        findViewById(R.id.editIngredient_Recipe).setOnFocusChangeListener(onFocusChangeListener);
         findViewById(R.id.editTitle_Recipe).setOnFocusChangeListener(new View.OnFocusChangeListener() {
-
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
-                    selectedEditText = null;
+                    selectedEditText = (EditText) v;
                 }
             }
         });
@@ -94,6 +131,7 @@ public class writingRecipePostActivity extends AppCompatActivity {
         switch (requestCode){
             case 0:
                 if(resultCode == Activity.RESULT_OK){
+
                     String profilePath = data.getStringExtra("profilePath");
                     pathList.add(profilePath);
 
@@ -102,7 +140,7 @@ public class writingRecipePostActivity extends AppCompatActivity {
                     LinearLayout linearLayout = new LinearLayout(writingRecipePostActivity.this);
                     linearLayout.setLayoutParams(layoutParams);
                     linearLayout.setOrientation(LinearLayout.VERTICAL);
-                    if(selectedEditText == null){
+                    if(parent.getChildCount() == 0){
                         parent.addView(linearLayout);
                     }else{
                         for(int i = 0 ; i < parent.getChildCount() ; i++){
@@ -130,6 +168,8 @@ public class writingRecipePostActivity extends AppCompatActivity {
                     editText.setHint("사진에대한 설명을 입력해주세요!!");
                     editText.setOnFocusChangeListener(onFocusChangeListener);
                     linearLayout.addView(editText);
+                    linearLayout.setPadding(5,5,5,5);
+
                 }
                 break;
             case 1:
@@ -196,8 +236,9 @@ public class writingRecipePostActivity extends AppCompatActivity {
 
     private void bulletinUpload(){
         final String title = ((EditText)findViewById(R.id.editTitle_Recipe)).getText().toString();
-
-        if(title.length() > 0 && pathList.size() > 0){
+        final String recipe_ingredient = ((EditText)findViewById(R.id.editIngredient_Recipe)).getText().toString();
+        final long recipePrice = Long.parseLong(((EditText)findViewById(R.id.recipePrice)).getText().toString());
+        if(title.length() > 0 && pathList.size() > 0 && recipe_ingredient.length() > 0 && recipePrice > 0){
             loaderLayout.setVisibility(View.VISIBLE);
             ArrayList<String> contentsList = new ArrayList<>();
 
@@ -267,7 +308,9 @@ public class writingRecipePostActivity extends AppCompatActivity {
                                             successCount++;
                                             Log.e("로그","" +successCount);
                                             if(pathList.size() == successCount){
-                                                RecipePostInfo recipePostInfo = new RecipePostInfo(titleImagePath, title, contentsList, user.getUid(), new Date(), 0);
+                                                ArrayList<String> recomUser = new ArrayList<>();
+                                                RecipePostInfo recipePostInfo = new RecipePostInfo(titleImagePath, title, recipe_ingredient ,contentsList,
+                                                        user.getUid(), new Date(), 0, documentReference.getId(), recomUser, recipePrice, foodCategory, tagCategory);
                                                 dbUploader(documentReference, recipePostInfo);
                                                 for(int a = 0 ; a < contentsList.size(); a++){
                                                     Log.e("로그: ", "콘텐츠: " +contentsList.get(a));

@@ -29,31 +29,28 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="제목"
-                android:inputType="textPersonName" />
+                android:inputType="text" />
 
-            <LinearLayout
-                android:id="@+id/contentsLayout"
+            <EditText
+                android:id="@+id/editIngredient_Recipe"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:ems="10"
+                android:gravity="top"
+                android:hint="재료를 입력하세요!"
+                android:inputType="text"
+                android:lines="10" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/contentsLayout"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:id="@+id/editContent_Recipe"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:ems="10"
-                        android:gravity="top"
-                        android:hint="내용을 입력하세요!"
-                        android:inputType="textPersonName"
-                        android:lines="10" />
-                </LinearLayout>
-
-            </LinearLayout>
+                    android:orientation="horizontal"/>
+            </HorizontalScrollView>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -62,87 +59,37 @@
                 android:orientation="vertical"
                 android:padding="5dp">
 
-                <TextView
+                <EditText
                     android:id="@+id/recipePrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="가격을 입력해주세요!"
+                    android:inputType="text"
                     android:textSize="18sp" />
 
-                <LinearLayout
+                <TableLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:stretchColumns="*">
 
-                    <TableLayout
+                    <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:stretchColumns="*">
+                        android:layout_height="match_parent">
 
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                        <Spinner
+                            android:id="@+id/foodCategorySpinner"
+                            android:entries="@array/foodCategorySpinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
 
-                            <Spinner
-                                android:id="@+id/foodCategorySpinner"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                            <Spinner
-                                android:id="@+id/priceCategorySpinner"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                            <Spinner
-                                android:id="@+id/tagCategorySpinner"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-                        </TableRow>
-                    </TableLayout>
-
-                    <TableLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:stretchColumns="*">
-
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <CheckBox
-                                android:id="@+id/wholeConv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="전체" />
-
-                            <CheckBox
-                                android:id="@+id/gs25Check"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="GS25" />
-
-                            <CheckBox
-                                android:id="@+id/sevenElevenCheck"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="세븐일레븐" />
-
-                            <CheckBox
-                                android:id="@+id/cuCheck"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="CU" />
-
-                            <CheckBox
-                                android:id="@+id/emart24Check"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Emart24" />
-                        </TableRow>
-                    </TableLayout>
-
-                </LinearLayout>
+                        <Spinner
+                            android:id="@+id/tagCategorySpinner"
+                            android:entries="@array/tagCategorySpinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </TableRow>
+                </TableLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
