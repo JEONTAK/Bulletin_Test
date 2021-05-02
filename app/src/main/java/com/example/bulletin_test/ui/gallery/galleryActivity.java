@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bulletin_test.R;
 import com.example.bulletin_test.ui.adapter.galleryAdapter;
+import com.example.bulletin_test.ui.login.MemberInfo;
 import com.example.bulletin_test.ui.writingContent.writingRecipePostActivity;
 
 import java.util.ArrayList;
@@ -87,10 +88,8 @@ public class galleryActivity extends AppCompatActivity {
         uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 
         projection = new String[] {MediaStore.MediaColumns.DATA,MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
-        for(int i = 0 ; i < projection.length ; i++){
-            Log.d("로그: ", "a : " + projection[i]);
-        }
-        cursor = activity.getContentResolver().query(uri,projection,null,null, "\'" + DATE_TAKEN + "\'DESC");
+
+        cursor = activity.getContentResolver().query(uri,projection,null,null, "\'" + MediaStore.Images.ImageColumns.DATE_TAKEN + "\' ASC");
 
         column_index_data = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
 
