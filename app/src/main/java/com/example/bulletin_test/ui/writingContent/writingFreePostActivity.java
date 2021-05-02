@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bulletin_test.R;
 import com.example.bulletin_test.ui.community.communityActivity;
-import com.example.bulletin_test.ui.gallery.galleryActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
