@@ -37,7 +37,7 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/recomBtn"
+                    android:id="@+id/recipeRecomBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -67,7 +67,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/recipeInfoTitle"
+                android:id="@+id/recipeIntoTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -96,7 +96,7 @@
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/recipeInfoTitle" />
+                    app:layout_constraintTop_toBottomOf="@+id/freeIntoTitle" />
 
                 <TextView
                     android:id="@+id/textPrice"
@@ -137,7 +137,7 @@
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/recipeInfoTitle" />
+                    app:layout_constraintTop_toBottomOf="@+id/freeIntoTitle" />
             </LinearLayout>
 
             <TextView
@@ -162,7 +162,7 @@
                 android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/textDescription"
+                android:id="@+id/recipeDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="\n레시피설명\n"

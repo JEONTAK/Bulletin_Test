@@ -1,11 +1,9 @@
 package com.example.bulletin_test.ui.community;
 
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -15,7 +13,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +20,6 @@ import com.bumptech.glide.Glide;
 import com.example.bulletin_test.R;
 import com.example.bulletin_test.ui.adapter.recipeAdapter;
 import com.example.bulletin_test.ui.writingContent.RecipePostInfo;
-import com.example.bulletin_test.ui.writingContent.writingRecipePostActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,13 +28,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import org.w3c.dom.Document;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -66,7 +59,7 @@ public class recipeInformationActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.recomBtn:
+                case R.id.recipeRecomBtn:
                     FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser(); //파이어베이스 유저 선언
                     String user = firebaseUser.getUid();
                     String id = recipePostInfo.getRecipeId();
@@ -112,7 +105,7 @@ public class recipeInformationActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         TextView isRecom = findViewById(R.id.isRecomText);
-        RecomBtn = findViewById(R.id.recomBtn);
+        RecomBtn = findViewById(R.id.recipeRecomBtn);
         RecomBtn.setOnClickListener(onClickListener);
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser(); //파이어베이스 유저 선언
         String user = firebaseUser.getUid();
@@ -131,7 +124,6 @@ public class recipeInformationActivity extends AppCompatActivity {
 
         }
 
-        recipePostInfo = (RecipePostInfo) getIntent().getSerializableExtra("recipePostInfo");
         String id = getIntent().getStringExtra("id");
         Log.d("로그: ", "" + getIntent().getStringExtra("id"));
 
@@ -143,7 +135,7 @@ public class recipeInformationActivity extends AppCompatActivity {
         }
         Log.d("로그","" + recipePostInfo.getTitleImage());
 
-        TextView recipeInfoTitle = findViewById(R.id.recipeInfoTitle);
+        TextView recipeInfoTitle = findViewById(R.id.recipeIntoTitle);
         recipeInfoTitle.setText(recipePostInfo.getTitle());
         Log.d("로그","" + recipePostInfo.getTitle());
 

@@ -1,19 +1,29 @@
 package com.example.bulletin_test.ui.writingContent;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
-public class FreePostInfo {
+public class FreePostInfo implements Serializable {
     private String title;
     private String content;
     private String publisher;
     private Date createdAt;
+    private long recom;
+    private ArrayList<String> comment;
+    private String postId;
+    private ArrayList<String> recomUserId;
 
-    public FreePostInfo(String title, String content, String publisher, Date createdAt){
+    public FreePostInfo(String title, String content, String publisher, Date createdAt, long recom, ArrayList<String> comment, String postId, ArrayList<String> recomUserId){
         this.title = title;
         this.content = content;
         this.publisher = publisher;
         this.createdAt = createdAt;
+        this.recom = recom;
+        this.comment = comment;
+        this.postId = postId;
+        this.recomUserId = recomUserId;
     }
 
     public String getTitle(){ return this.title;}
@@ -24,5 +34,13 @@ public class FreePostInfo {
     public void setPublisher(String publisher){this.publisher = publisher;}
     public Date getCreatedAt(){return this.createdAt;}
     public void setCreatedAt(Date publisher){this.createdAt = createdAt;}
+    public long getRecom(){return this.recom;}
+    public void setRecom(long recom){this.recom = recom;}
+    public ArrayList<String> getComment(){return this.comment;}
+    public void setComment(ArrayList<String> comment){this.comment = comment;}
+    public String getPostId(){ return  this.postId;}
+    public void setPostId(String postId){this.postId = postId;}
+    public ArrayList<String> getRecomUserId(){return this.recomUserId;}
+    public void setRecomUserId(ArrayList<String> recomUserId){this.recomUserId = recomUserId;}
 
 }

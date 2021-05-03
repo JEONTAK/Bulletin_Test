@@ -59,10 +59,14 @@ public class freeCommunityActivity extends AppCompatActivity {
                                 Log.d("로그: ", document.getId() + " => " + document.getData());
                                 free_postList.add(new FreePostInfo(
                                         document.getData().get("title").toString(),
-                                        (String) document.getData().get("content"),
+                                        document.getData().get("content").toString(),
                                         document.getData().get("publisher").toString(),
-                                        new Date(document.getDate("createdAt").getTime())
-                                ));
+                                        new Date(document.getDate("createdAt").getTime()),
+                                        (Long) document.getData().get("recom"),
+                                        (ArrayList<String>) document.getData().get("comment"),
+                                        document.getData().get("postId").toString(),
+                                        (ArrayList<String>) document.getData().get("recomUserId")
+                                        ));
                             }
 
                             RecyclerView.Adapter mAdapter1 = new freeAdapter(freeCommunityActivity.this, free_postList);

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import static com.example.bulletin_test.Util.showToast;
@@ -31,8 +33,7 @@ public class writingFreePostActivity extends AppCompatActivity {
     private static final String TAG =" freePostActivity";
     private FirebaseUser user;
     private RelativeLayout loaderLayout;
-    private LinearLayout parent;
-    private EditText selectedEditText;
+
 
     private int pathCount , successCount;
     //dbUploader
@@ -46,15 +47,6 @@ public class writingFreePostActivity extends AppCompatActivity {
         
         findViewById(R.id.confirmBtn).setOnClickListener(onClickListener);
         findViewById(R.id.goBackBtn).setOnClickListener(onClickListener);
-        findViewById(R.id.editIngredient_Recipe).setOnFocusChangeListener(onFocusChangeListener);
-        findViewById(R.id.editTitle_Recipe).setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    selectedEditText = null;
-                }
-            }
-        });
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -72,28 +64,20 @@ public class writingFreePostActivity extends AppCompatActivity {
 
     };
 
-    View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener(){
-        @Override
-        public void onFocusChange(View v, boolean hasFocus) {
-            if(hasFocus){
-                selectedEditText = (EditText) v;
-            }
-        }
-    };
-
-
     private void bulletinUpload(){
-        final String title = ((EditText)findViewById(R.id.editTitle_Recipe)).getText().toString();
-        final String contentsList = ((EditText)findViewById(R.id.editIngredient_Recipe)).getText().toString();
+        final String title = ((EditText)findViewById(R.id.editTitle_Free)).getText().toString();
+        final String content = ((TextView)findViewById(R.id.editContent_Free)).getText().toString();
+        final ArrayList<String> comment = new ArrayList<>();
 
-        if(title.length() > 0 && contentsList.length()> 0){
+        if(title.length() > 0 && content.length()> 0){
             loaderLayout.setVisibility(View.VISIBLE);
             user = FirebaseAuth.getInstance().getCurrentUser();
             FirebaseStorage storage = FirebaseStorage.getInstance();
             StorageReference storageRef = storage.getReference();
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+            ArrayList<String> recomUser = new ArrayList<>();
             final DocumentReference documentReference = firebaseFirestore.collection("freePost").document();
-            FreePostInfo freePostInfo = new FreePostInfo(title, contentsList, user.getUid(), new Date());
+            FreePostInfo freePostInfo = new FreePostInfo(title, content, user.getUid(), new Date(), 0, comment, documentReference.getId(), recomUser);
             dbUploader(documentReference, freePostInfo);
         }
         else{

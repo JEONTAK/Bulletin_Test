@@ -86,7 +86,7 @@ public class recipeAdapter extends RecyclerView.Adapter<recipeAdapter.recipeView
         createdAt.setText(new SimpleDateFormat("MM-dd hh:mm", Locale.KOREA).format(mDataset.get(position).getCreatedAt()));
 
         TextView recom = cardView.findViewById(R.id.recipeRecom);
-        publisher.setText("추천수 : " + (int) mDataset.get(position).getRecom());
+        recom.setText("추천수 : " + (int) mDataset.get(position).getRecom());
 
     }
 

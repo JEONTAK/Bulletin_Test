@@ -18,7 +18,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/freeTitle"
+                android:id="@+id/commentContent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
@@ -27,38 +27,18 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="타이틀" />
+                tools:text="내용" />
 
             <TextView
-                android:id="@+id/freePublisher"
+                android:id="@+id/commentPublisher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/freeRecom"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="작성자" />
-
-            <TextView
-                android:id="@+id/freeRecom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:textSize="8sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:text="추천수" />
-
-            <TextView
-                android:id="@+id/freeCreatedAt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:textSize="8sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/freeRecom"
-                tools:text="날짜" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
