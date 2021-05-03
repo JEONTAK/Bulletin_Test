@@ -60,7 +60,7 @@ public class MemberActivity extends AppCompatActivity {
             // Access a Cloud Firestore instance from your Activity
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            com.example.bulletin_test.ui.login.MemberInfo memberInfo = new com.example.bulletin_test.ui.login.MemberInfo(name,phoneNumber,Date,adress);//Memberinfo 이름=new 이름(속성);
+            com.example.bulletin_test.ui.login.MemberInfo memberInfo = new com.example.bulletin_test.ui.login.MemberInfo(name,phoneNumber,Date,adress, user.getUid());//Memberinfo 이름=new 이름(속성);
 
 
             if(user!=null){//만약 사용자가 없다면

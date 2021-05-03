@@ -21,14 +21,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bulletin_test.R;
 import com.example.bulletin_test.ui.adapter.commentAdapter;
 
+import com.example.bulletin_test.ui.login.MemberInfo;
 import com.example.bulletin_test.ui.writingContent.FreePostInfo;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -59,6 +63,7 @@ public class freeInformationActivity extends AppCompatActivity {
         firebaseFirestore= FirebaseFirestore.getInstance();//데이터베이스 선언
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser(); //파이어베이스 유저 선언
         user = firebaseUser.getUid();
+        Log.d(TAG, "유저 아이디 " + firebaseUser.getUid() + " aa " + user);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -101,14 +106,42 @@ public class freeInformationActivity extends AppCompatActivity {
                         break;
                     }
                 case R.id.writingFreePost:
+                    ArrayList<MemberInfo> userInfo = new ArrayList<MemberInfo>();
+                    DocumentReference docRef = firebaseFirestore.collection("users").document(user);
+                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    userInfo.add(new MemberInfo(
+                                            document.getData().get("name").toString(),
+                                            document.getData().get("phoneNumber").toString(),
+                                            document.getData().get("adress").toString(),
+                                            document.getData().get("date").toString(),
+                                            document.getData().get("userId").toString()
+                                    ));
+                                    Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                                } else {
+                                    Log.d(TAG, "No such document");
+                                }
+                            } else {
+                                Log.d(TAG, "get failed with ", task.getException());
+                            }
+                        }
+                    });
+                    String name = userInfo.get(0).getName();
                     loaderLayout.setVisibility(View.VISIBLE);
                     id = freePostInfo.getPostId();
                     String comment = ((EditText)findViewById(R.id.editComment)).getText().toString();
                     ArrayList<String> newComment = new ArrayList<>();
                     newComment = freePostInfo.getComment();
-                    String commentAndUser = comment + "//" +user;
+                    String commentAndUser = comment + "//" + user + "//" + name;
                     newComment.add(commentAndUser);
                     freePostInfo.setComment(newComment);
+
+
+
 
                     if(id == null){
                         dr = firebaseFirestore.collection("freePost").document();
@@ -176,20 +209,6 @@ public class freeInformationActivity extends AppCompatActivity {
         comment_view.setLayoutManager(new LinearLayoutManager(freeInformationActivity.this));
         RecyclerView.Adapter mAdapter = new commentAdapter(freeInformationActivity.this, freeContentList);
         comment_view.setAdapter(mAdapter);
-
-        /*if(freeCommentLayout.getChildCount()==0){
-            for(int i = 0 ; i < freeContentList.size() ; i++){
-                String[] all = freeContentList.get(i).split("//");
-                String comment = all[0];
-                String publisher = all[1];
-                Log.d("로그","" + freeContentList.get(i));
-                TextView textView = new TextView(this);
-                textView.setLayoutParams(layoutParams);
-                textView.setText(comment);
-                freeCommentLayout.addView(textView);
-
-            }
-        }*/
 
     }
 

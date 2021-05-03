@@ -9,16 +9,18 @@ public class FreePostInfo implements Serializable {
     private String title;
     private String content;
     private String publisher;
+    private String userName;
     private Date createdAt;
     private long recom;
     private ArrayList<String> comment;
     private String postId;
     private ArrayList<String> recomUserId;
 
-    public FreePostInfo(String title, String content, String publisher, Date createdAt, long recom, ArrayList<String> comment, String postId, ArrayList<String> recomUserId){
+    public FreePostInfo(String title, String content, String publisher, String userName, Date createdAt, long recom, ArrayList<String> comment, String postId, ArrayList<String> recomUserId){
         this.title = title;
         this.content = content;
         this.publisher = publisher;
+        this.userName = userName;
         this.createdAt = createdAt;
         this.recom = recom;
         this.comment = comment;
@@ -32,6 +34,8 @@ public class FreePostInfo implements Serializable {
     public void setContent(String content){this.content = content;}
     public String getPublisher(){return this.publisher;}
     public void setPublisher(String publisher){this.publisher = publisher;}
+    public String getUserName(){return this.userName;}
+    public void setUserName(String userName){this.userName = userName;}
     public Date getCreatedAt(){return this.createdAt;}
     public void setCreatedAt(Date publisher){this.createdAt = createdAt;}
     public long getRecom(){return this.recom;}

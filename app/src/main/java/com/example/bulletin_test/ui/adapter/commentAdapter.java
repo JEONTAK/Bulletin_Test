@@ -59,7 +59,7 @@ public class commentAdapter extends RecyclerView.Adapter<commentAdapter.commentV
         title.setText(all[0]);
 
         TextView publisher = cardView.findViewById(R.id.commentPublisher);
-        publisher.setText(all[1]);
+        publisher.setText(all[2]);
 
     }
 
